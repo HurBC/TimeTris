@@ -1,0 +1,203 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+header
+{
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}
+
+
+aside
+{
+    margin: 3% 2% 0 0;
+    flex: .5;
+    border: 1px solid blue;
+}
+
+aside:nth-last-child(1)
+{
+    border: 1px solid red;
+    margin: 3% 0 0 2%;
+}
+
+section
+{
+    margin: 3% 2% 0 0;
+    flex: 1;
+    border: 1px solid green;
+}
+
+footer
+{
+    width: 100%;
+    height: 5vh;
+    border: 1px solid red;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+li
+{
+    margin-bottom: 2vh;
+}
+
+#container-H
+{
+    margin: 0 10%;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#all
+{
+    margin: 0 10%;
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid blue;
+}
+
+#line
+{
+    width: 0;
+    height: 1vh;
+    background-color: red;
+}
+
+.tittle
+{
+    margin: 0 20% 0 30%;
+}
+
+.box-H
+{
+    width: 30vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons
+{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logo,
+.ham
+{
+    width: 5vh;
+    height: 5vh;
+    background: red;
+}
+
+.global
+{
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+}
+
+.global .xob
+{
+    width: 100%;
+    height: 50vh;
+    border: 1px solid red;
+}
+
+.global .xob:nth-last-child(1)
+{
+    margin-top: 3vh;
+    height: 20vh;
+}
+
+.Interfaz
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.Interfaz .box
+{
+    flex: 1;
+    height: 100%;
+}
+
+.Interfaz #game
+{
+    flex: 4;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.Interfaz .box .xob
+{
+    height: 20vh;
+    border: 1px solid red;
+}
+
+.Interfaz .box .xob:first-child
+{
+    height: 10vh;
+    margin-bottom: 1.7vh;
+}
+
+.Interfaz .box .xob:last-child h4
+{
+    margin-top: 5vh;
+    text-align: center;
+}
+
+.xd .box
+{
+    height: 20vh;
+    border: 1px solid blue;
+}
+
+.row 
+{
+    width: 100%;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.block
+{
+    width: 10px;
+    height: 100%;
+    background-color: rgb(53, 49, 63);
+    border: 1px solid grey;
+}
+
+.tblock,
+.lblock
+{
+    width: 10px;
+    height: 100%;
+    background-color: blueviolet;
+    border: 1px solid rgb(98, 35, 207);
+}
+
+.lblock
+{
+    background-color: orange;
+    border: 1px solid rgb(215, 108, 1);
+}
