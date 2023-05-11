@@ -1,48 +1,101 @@
 //variables
-var world = []
-var score = 100;
-var level = 2;
+var world = [];
+var score = 0;
+var shapeChosse = '';
+var level = 1;
+var speed = 100;
 
-//piezas
-var t = [
-    [0, 10],
-    [0, 11],
-    [0, 12],
-    [1, 11],
-    false
-]
+const shapes = {
+    T: [
+        [0, 4],
+        [0, 5],
+        [0, 6],
+        [1, 5],
+        false
+    ],
+    L: [
+        [0, 1],
+        [1, 1],
+        [2, 1],
+        [2, 2],
+        false
+    ],
+    O: [
+        [0, 2],
+        [0, 3],
+        [1, 2],
+        [1, 3],
+        false
+    ],
+    I: [
+        [0, 0],
+        [1, 0],
+        [2, 0],
+        [3, 0],
+        false
+    ],
+    S: [
+        [2, 5],
+        [2, 6],
+        [1, 6],
+        [1, 7],
+        false
+    ],
+    Z: [
+        [0, 7],
+        [0, 8],
+        [1, 8],
+        [1, 9],
+        false
+    ],
+    J: [
+        [0, 10],
+        [1, 10],
+        [2, 10],
+        [2, 9],
+        false
+    ]
+}
 
-var l = [
-    [2],
-    [2],
-    [2,2],
-    false
-]
 
-var allPieces = [t, l]
-
-//bucle
-for(var i = 0; i < 41; i++){
-    world[i] = [];
-    for(var j = 0; j < 23; j++){
-        world[i][j] = 0;
+//functions
+function createWorld() {
+    for (var i = 0; i < 23; i++) {
+        world[i] = [];
+            for (var j = 0; j < 11; j++) {
+                world[i][j] = 0;
+            }
     }
 }
 
-//display
-function displayWorld(){
+function displayWorld() {
     var output = '';
-    for(var i = 0; i < world.length; i++){
+    for(var i = 0; i < world.length; i++) {
         output += "\n <div class='row'>\n";
-        for(let j = 0; j < world[i].length; j++){
-            if(world[i][j] == 0){
+        for(var j = 0; j < world[i].length; j++) {
+            if (world[i][j] == 0) {
                 output += "<div class='block'></div>";
             }
-            if(world[i][j] == 1){
+            if (world[i][j] == 1) {
                 output += "<div class='tblock'></div>";
             }
-            if(world[i][j] == 2){
+            if (world[i][j] == 2) {
                 output += "<div class='lblock'></div>";
+            }
+            if (world[i][j] == 3) {
+                output += "<div class='iblock'></div>";
+            }
+            if (world[i][j] == 4) {
+                output += "<div class='oblock'></div>";
+            }
+            if (world[i][j] == 5) {
+                output += "<div class='sblock'></div>";
+            }
+            if (world[i][j] == 6) {
+                output += "<div class='zblock'></div>";
+            }
+            if (world[i][j] == 7) {
+                output += "<div class='jblock'></div>";
             }
         }
         output += "\n </div>";
@@ -50,91 +103,140 @@ function displayWorld(){
     document.getElementById('game').innerHTML = output;
 }
 
-function displayTBlock(){
-    for(var i = 0; i < t.length - 1; i++){
-        var x = t[i][0];
-        var y = t[i][1];
-        world[x][y] = 1;
+function displayBlock(shape) {
+    var blockMap = {
+        "T": 1,
+        "L": 2,
+        "I": 3,
+        "O": 4,
+        "S": 5,
+        "Z": 6,
+        "J": 7
+    };
+
+    var value = blockMap[shape];
+
+    if (value) {
+        for (var i = 0; i < shapes[shape].length - 1; i++) {
+            var x = shapes[shape][i][0];
+            var y = shapes[shape][i][1];
+            if (world[x][y] == 0) {
+                world[x][y] = value;
+            }
+        }
+        displayWorld();
     }
-    displayWorld();
 }
 
-function moveLeft(){
-    if(t[4] == true){
-        for(var i = 0; i < t.length - 1; i++){
-            if(t[i][1] == 0){
+
+function moveToLeft(shape) {
+    if (shapes.hasOwnProperty(shape) && shapes[shape][4] === true) {
+        var blocks = shapes[shape];
+        var canMoveLeft = true;
+
+        if (canMoveLeft) {
+            for (var i = 0; i < blocks.length - 1; i++) {
+                var x = blocks[i][0];
+                var y = blocks[i][1];
+                if (blocks[i][1] > 0) {
+                    world[x][y] = 0;
+                    blocks[i][1] -= 1;
+                    displayBlock(shape);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+function moveToRight(shape) {
+    if (shapes.hasOwnProperty(shape) && shapes[shape][4] === true) {
+        var blocks = shapes[shape];
+        var canMoveRight = true;
+
+        for (var i = 0; i < blocks.length - 1; i++) {
+            var x = blocks[i][0];
+            var y = blocks[i][1];
+
+            // Verificar si hay colisión en el lado derecho
+            if (y === 10) {
+                canMoveRight = false;
                 break;
             }
-            var x = t[i][0];
-            var y = t[i][1];
-            world[x][y] = 0;
-            t[i][1]--;
-            displayTBlock();
+        }
+
+        if (canMoveRight) {
+            for (var i = 0; i < blocks.length - 1; i++) {
+                var x = blocks[i][0];
+                var y = blocks[i][1];
+
+                world[x][y] = 0;
+                blocks[i][1] += 1;
+            }
+
+            displayBlock(shape);
         }
     }
 }
 
-function moveRight() {
-    if (t[4] == true) {
-        for (var i = 0; i < t.length; i++) {
-            var x = t[i][0];
-            var y = t[i][1];
-            world[x][y] = 0;
-            t[i][1]++;
-            displayTBlock();
-            if(t[2][1] == 22){
+function moveToBottom(shape) {
+    if (shapes.hasOwnProperty(shape) && shapes[shape][4] === true) {
+        var blocks = shapes[shape];
+        var canMoveBottom = true;
+
+        for (var i = 0; i < blocks.length - 1; i++) {
+            var x = blocks[i][0];
+            var y = blocks[i][1];
+
+            if (x === 22) {
+                canMoveBottom = false;
+                shapes[shape][4] = false;
+                shapeSelect();
                 break;
             }
         }
-    }
-}
 
-function moveBlocks(){
-    if(t[4] == true){
-        for(var i = 0; i < t.length - 1; i++){
-            if(t[0][0] == 39){
-                t[4] = false;
+        if (canMoveBottom) {
+            for (var i = 0; i < blocks.length - 1; i++) {
+                var x = blocks[i][0];
+                var y = blocks[i][1];
+
+                world[x][y] = 0;
+                blocks[i][0] += 1;
+                displayBlock(shape);
             }
-            var x = t[i][0];
-            var y = t[i][1];
-            world[x][y] = 0;
-            t[i][0]++;
-            displayTBlock();
         }
     }
 }
 
-function dispalyScore(){
-    document.getElementById('score').innerHTML = score;
+function shapeSelect() {
+    const shapeKeys = Object.keys(shapes);
+    const randomKey = shapeKeys[Math.floor(Math.random() * shapeKeys.length)];
+    const shapeC = shapes[randomKey];
+    shapeC[4] = true;
+    shapeChosse = randomKey
+    displayBlock(randomKey);
 }
 
-function displayLevel(){
-    document.getElementById('level').innerHTML = level;
-}
 
-//call
-function startGame(){
-    displayWorld();
-    dispalyScore();
-    displayLevel();
-}
+createWorld();
+displayWorld();
 
-startGame();
-setInterval(moveBlocks, 500);
+setInterval(function() {
+    moveToBottom(shapeChosse);
+}, speed);
 
-//Game
-document.onkeydown = function(e){
-    if(e.key == 's'){
-        t[4] = true;
-        displayTBlock();
+//controls
+document.onkeydown = function(e) {
+    console.log(e.code);
+    if (e.code == 'KeyT') {
+        shapeSelect();
     }
-    if(e.key == ' '){
-        setInterval(moveTest, 100);
+    if (e.code == 'ArrowLeft') {
+        moveToLeft(shapeChosse);
     }
-    if(e.key == 'a'){
-        moveLeft();
-    }
-    if(e.key == 'd'){
-        moveRight();
+    if (e.code == 'ArrowRight') {
+        moveToRight(shapeChosse);
     }
 }
