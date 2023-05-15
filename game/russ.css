@@ -10,10 +10,3 @@ body {
 canvas {
     filter: drop-shadow(5px 5px 2px black);
 }
-
-#container {
-    width: 5vh;
-    height: 5vh;
-    background-color: white;
-    border: 1px solid red;
-}

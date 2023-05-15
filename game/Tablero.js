@@ -66,6 +66,8 @@ class Tablero {
                     }
                     this.minosAlmacenados[columna][fila] =
                     this.minosAlmacenados[columna][fila - 1];
+                    changeColorback()
+                    crearMapeoBaseTetriminos()
                 }
             }
         }

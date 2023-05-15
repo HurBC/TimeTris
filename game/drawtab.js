@@ -3,8 +3,15 @@ let regulador_velocidad_teclas = 0
 let regulador_de_caida = 0
 let lineas_hechas = 0
 let ColorsBack = [
-    []
+    [`linear-gradient(152deg, #008eea 0%, #0026e9 35%, #25f4e9 100%)`],
+    [`linear-gradient(152deg, #008f21 0%, #008f6f 35%, #219900 100%)`],
+    [`linear-gradient(152deg, #ffff89 0%, #ffcc50 35%, #ff9800 100%)`],
+    [`linear-gradient(152deg, #d30000 0%, #f37600 35%, #ff0080 100%)`],
+    [`linear-gradient(152deg, #f4f500 0%, #ffff20 35%, #74f400 100%)`],
+    [`linear-gradient(152deg, #7600a9 0%, #a80083 35%, #2700b3 100%)`],
+    [`linear-gradient(152deg, #00f4f5 0%, #0076f4 35%, #00ff80 100%)`],
 ]
+let colorChoiced = 0
 
 /* 
 Generación de fondo dinámico
@@ -12,7 +19,8 @@ Generación de fondo dinámico
 let angulo_fondo = Math.random() * 360
 let tono_fondo = Math.random() * 360
 setInterval(() => {
-    document.body.style.background = `linear-gradient(152deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);`
+    colorSelected = colorChoiced
+    document.body.style.background = ColorsBack[colorSelected]
     angulo_fondo += Math.random()
     tono_fondo += Math.random()
 }, 20);
@@ -49,6 +57,10 @@ function setup() {
         tablero.ancho + 2 * MARGEN_TABLERO,
         tablero.alto + 2 * MARGEN_TABLERO + 2*tablero.lado_celda
     )
+}
+
+function changeColorback() {
+    colorChoiced = random([0,1,2,3,4,5,6])
 }
 
 /* 

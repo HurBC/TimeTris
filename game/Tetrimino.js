@@ -146,10 +146,19 @@ class Tetrimino {
 
 function crearMapeoBaseTetriminos() {
     //Muy importante, no le pondan let, var, ni const de prefijo
-    let Colors = ["#43204a","#7f1e47","#422343","#c22047","#ea284b","#c21a01","#f03c02"]
+    let Colors = [
+        ["#853400", "#c06500", "#ff9800", "#ffcc50", "#ffff89", "#ee8b00", "#ffb12c"],
+        ["#7f0000", "#bd0003", "#ff0000", "#ff6c3e", "#ffa372", "#ed0000", "#dd3a1e"],
+        ["#003785", "#1465bb", "#2196f3", "#81c9fa", "#b9ffff", "#0089e4", "#4fafff"],
+        ["#003400", "#006414", "#009929", "#5ccb5f", "#98ff96", "#008a1c", "#33b242"],
+        ["#1b004b", "#4c007d", "#7f00b2", "#bc4ed8", "#f988ff", "#7100a4", "#9a2bcc"],
+        ["#879200", "#c1c700", "#ffff00", "#ffff6a", "#ffffa2", "#eef000", "#ffff39"],
+        ["#7f0000", "#bd0003", "#ff0000", "#ff6c3e", "#ffa372", "#ed0000", "#dd3a1e"],
+    ]
+    let colorChoicedTetrimino = colorChoiced
     tetriminosBase = {
         Z: {
-            color: Colors[0],
+            color: Colors[colorChoicedTetrimino][0],
             mapa: [
                 createVector(),
                 createVector(-1, -1),
@@ -158,7 +167,7 @@ function crearMapeoBaseTetriminos() {
             ],
         },
         S: {
-            color: Colors[1],
+            color: Colors[colorChoicedTetrimino][1],
             mapa: [
                 createVector(),
                 createVector(1, -1),
@@ -167,7 +176,7 @@ function crearMapeoBaseTetriminos() {
             ],
         },
         J: {
-            color: Colors[2],
+            color: Colors[colorChoicedTetrimino][2],
             mapa: [
                 createVector(),
                 createVector(-1, 0),
@@ -176,7 +185,7 @@ function crearMapeoBaseTetriminos() {
             ],
         },
         L: {
-            color: Colors[3],
+            color: Colors[colorChoicedTetrimino][3],
             mapa: [
                 createVector(),
                 createVector(-1, 0),
@@ -185,7 +194,7 @@ function crearMapeoBaseTetriminos() {
             ],
         },
         T: {
-            color: Colors[4],
+            color: Colors[colorChoicedTetrimino][4],
             mapa: [
                 createVector(),
                 createVector(-1, 0),
@@ -194,7 +203,7 @@ function crearMapeoBaseTetriminos() {
             ],
         },
         O: {
-            color: Colors[5],
+            color: Colors[colorChoicedTetrimino][5],
             mapa: [
                 createVector(),
                 createVector(0, -1),
@@ -203,7 +212,7 @@ function crearMapeoBaseTetriminos() {
             ],
         },
         I: {
-            color: Colors[6],
+            color: Colors[colorChoicedTetrimino][6],
             mapa: [
                 createVector(),
                 createVector(-1, 0),
