@@ -21,14 +21,7 @@
         canvas {
             filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.4));
         }
-
-        .cube {
-            width: 10px;
-            height: 10px;
-            background-color: red;
-        }
     </style>
-    <div class="cube"></div>
     <script src="Tablero.js"></script>
     <script src="Tetrimino.js"></script>
     <script>
@@ -43,7 +36,7 @@
         let angulo_fondo = Math.random() * 360
         let tono_fondo = Math.random() * 360
         setInterval(() => {
-            document.body.style.background = ``
+            document.body.style.background = `linear-gradient(152deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)`
             angulo_fondo += Math.random()
             tono_fondo += Math.random()
         }, 20);
