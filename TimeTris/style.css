@@ -86,9 +86,9 @@ li
     background-color: red;
 }
 
-.tittle
+.logo1
 {
-    margin: 0 20% 0 30%;
+    background-image: url("images/headertris.jpg");
 }
 
 .box-H
