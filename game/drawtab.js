@@ -1,7 +1,10 @@
-const MARGEN_TABLERO = 10
+const MARGEN_TABLERO = 110
 let regulador_velocidad_teclas = 0
 let regulador_de_caida = 0
 let lineas_hechas = 0
+let Score = 0
+let Level = 1
+let SubirNivel = 5
 let ColorsBack = [
     [`linear-gradient(152deg, #008eea 0%, #0026e9 35%, #25f4e9 100%)`],
     [`linear-gradient(152deg, #008f21 0%, #008f6f 35%, #219900 100%)`],
@@ -12,6 +15,7 @@ let ColorsBack = [
     [`linear-gradient(152deg, #00f4f5 0%, #0076f4 35%, #00ff80 100%)`],
 ]
 let colorChoiced = 0
+let pause = false
 
 /* 
 Generación de fondo dinámico
@@ -34,8 +38,10 @@ setInterval(() => {
         return
     }
     regulador_de_caida = millis()
-    tetrimino.moverAbajo()
-}, 500);
+    if (pause === false) {
+        tetrimino.moverAbajo()
+    }
+}, 0);
 
 
 /* 
@@ -69,33 +75,61 @@ y sirve para dar instrucciones precisas de dibujo sobre el canvas
 */
 function draw() {
     clear()
-    dibuajarPuntaje()
+    dibuajarPuntajeScoreLevel()
     tablero.dibujar()
     tetrimino.dibujar()
     keyEventsTetris()
 }
 
-function dibuajarPuntaje() {
+function dibuajarPuntajeScoreLevel() {
     push()
     textSize(20)
     strokeWeight(2)
     stroke("black")
     fill("white")
     text(
-        "Líneas: " + lineas_hechas,
-        tablero.posición.x,
-        tablero.posición.y - tablero.lado_celda / 2
+        "Líneas: \n" + lineas_hechas,
+        tablero.posición.x - tablero.lado_celda * 3.5,
+        tablero.posición.y + tablero.lado_celda
+    )
+    pop()
+    push()
+    textSize(20)
+    strokeWeight(2)
+    stroke("black")
+    fill("white")
+    text(
+        "Score: \n" + Score,
+        tablero.posición.x - tablero.lado_celda * 3.5,
+        tablero.posición.y + tablero.lado_celda * 3.5
+    )
+    pop()
+    push()
+    if (lineas_hechas >= SubirNivel) {
+        Level++
+        SubirNivel *= 1.8
+        changeColorback()
+        crearMapeoBaseTetriminos()
+    }
+    textSize(20)
+    strokeWeight(2)
+    stroke("black")
+    fill("white")
+    text(
+        "Level: \n" + Level,
+        tablero.posición.x - tablero.lado_celda * 3.5,
+        tablero.posición.y + tablero.lado_celda * 6
     )
     pop()
 }
 
-let límite_regulador_velocidad_teclas = 100
+let límite_regulador_velocidad_teclas = 60
 
 function keyEventsTetris() {
     if (millis() - regulador_velocidad_teclas < límite_regulador_velocidad_teclas) {
         return
     }
-    límite_regulador_velocidad_teclas = 100
+    límite_regulador_velocidad_teclas = 60
     regulador_velocidad_teclas = millis()
 
     if (keyIsDown(RIGHT_ARROW)) {
@@ -109,6 +143,7 @@ function keyEventsTetris() {
     if (keyIsDown(DOWN_ARROW)) {
         tetrimino.moverAbajo()
         regulador_de_caida = millis()
+        Score += 1;
     }
     if (keyIsDown(UP_ARROW)) {
         límite_regulador_velocidad_teclas = 150
@@ -116,8 +151,15 @@ function keyEventsTetris() {
         regulador_de_caida = millis()
     }
     if (keyIsDown(32)) {
-        límite_regulador_velocidad_teclas = 200
+        límite_regulador_velocidad_teclas = 150
         tetrimino.ponerEnElFondo()
         regulador_de_caida = millis()
+    }
+    if (keyIsDown(ESCAPE)) {
+        if (pause == false) {
+            pause = true
+        } else if (pause == true) {
+            pause = false
+        }
     }
 }

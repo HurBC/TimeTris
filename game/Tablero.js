@@ -32,6 +32,9 @@ class Tablero {
                 tablero = new Tablero();
                 tetrimino = new Tetrimino();
                 lineas_hechas = 0;
+                Score = 0;
+                Level = 1;
+                SubirNivel = 5;
             }
             this.minosAlmacenados[pmino.x][pmino.y] = tetrimino.nombre;
         }
@@ -66,8 +69,6 @@ class Tablero {
                     }
                     this.minosAlmacenados[columna][fila] =
                     this.minosAlmacenados[columna][fila - 1];
-                    changeColorback()
-                    crearMapeoBaseTetriminos()
                 }
             }
         }

@@ -44,6 +44,7 @@ class Tetrimino {
     ponerEnElFondo(){
         this.posición = this.espectro.posición
         this.moverAbajo()
+        Score += 10;
     }
 
     girar() {
