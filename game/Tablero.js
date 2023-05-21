@@ -35,6 +35,12 @@ class Tablero {
                 Score = 0;
                 Level = 1;
                 SubirNivel = 5;
+                start = false;
+                musicPlayed = false;
+                Music.stop();
+                Music2.stop();
+                Music3.stop()
+                colorChoiced = 7;
             }
             this.minosAlmacenados[pmino.x][pmino.y] = tetrimino.nombre;
         }
@@ -65,6 +71,9 @@ class Tablero {
                 for (let columna = 0; columna < this.columnas; columna++) {
                     if (fila == 0) {
                         this.minosAlmacenados[columna][fila] = "";
+                        if (Level < 3) {
+                            ClearLineSound.play()
+                        }
                         continue;
                     }
                     this.minosAlmacenados[columna][fila] =
@@ -93,10 +102,14 @@ traslación (suma) para el ajuste de las posiciones.
         noStroke();
         for (let columna = 0; columna < this.columnas; columna++) {
             for (let fila = 0; fila < this.filas; fila++) {
-                if ((columna + fila) % 2 == 0) {
-                    fill("black");
+                if (Level > 2) {
+                    if ((columna + fila) % 2 == 0) {
+                        fill("black");
+                    } else {
+                        fill("#003");
+                    }
                 } else {
-                    fill("#003");
+                    fill("#090404")
                 }
                 let c = this.coordenada(columna, fila);
                 rect(c.x, c.y, this.lado_celda);

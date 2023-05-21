@@ -155,6 +155,7 @@ function crearMapeoBaseTetriminos() {
         ["#1b004b", "#4c007d", "#7f00b2", "#bc4ed8", "#f988ff", "#7100a4", "#9a2bcc"],
         ["#879200", "#c1c700", "#ffff00", "#ffff6a", "#ffffa2", "#eef000", "#ffff39"],
         ["#7f0000", "#bd0003", "#ff0000", "#ff6c3e", "#ffa372", "#ed0000", "#dd3a1e"],
+        ["#306230", "#8bac0f", "#9bbc0f", "#306230", "#8bac0f", "#9bbc0f", "#306230"],
     ]
     let colorChoicedTetrimino = colorChoiced
     tetriminosBase = {
