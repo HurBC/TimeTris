@@ -25,6 +25,8 @@ let Blib;
 let SpaceSound;
 let ClearLineSound;
 let levelUpTimer = 0;
+let hold;
+let cooldown = false
 const levelUpDuration = 3000;
 
 /* 
@@ -95,6 +97,7 @@ y sirve para dar instrucciones precisas de dibujo sobre el canvas
 function draw() {
     clear()
     dibuajarPuntajeScoreLevel()
+    dibujarHold()
     tablero.dibujar()
     tetrimino.dibujar()
     keyEventsTetris()
@@ -175,14 +178,27 @@ function dibuajarPuntajeScoreLevel() {
     pop();
 }
 
+function dibujarHold() {
+    // ...
+    if (hold) {
+        push();
+        translate(-100, tablero.posición.y + tablero.lado_celda * 9 + 40);
+        scale(0.5); // Escala la pieza para que quepa en el espacio del hold
+        hold.dibujar();
+        pop();
+    }
+    // ...
+}
+
+
 function dibujarPopUp() {
     if (!start) {
-        fill(0, 0, 0, 50)
-        rect(0, windowHeight / 2.4, windowWidth, 100)
-        fill(255, 255, 255)
-        textSize(40)
-        textAlign(CENTER, CENTER)
-        text('Haz click para jugar', windowWidth / 2.7, windowHeight / 2.1)
+        fill(0, 0, 0, 50);
+        rect(0, windowHeight / 2.4, windowWidth, 100);
+        fill(255, 255, 255);
+        textSize(40);
+        textAlign(CENTER, CENTER);
+        text('Haz click para jugar', windowWidth / 3, windowHeight / 2.4 + 50);
     } else {
         text('')
     }
@@ -205,6 +221,22 @@ function mouseClicked() {
         Music.loop()
         musicPlayed = true
     }
+}
+
+function Holder() {
+    if (!hold) {
+        hold = tetrimino
+        console.log(hold)
+        tetrimino = new Tetrimino()
+    } else {
+        newHold = tetrimino
+        tetrimino = hold
+        hold = newHold
+    }
+}
+
+function resetCooldown() {
+    cooldown = false
 }
 
 let límite_regulador_velocidad_teclas = 60
@@ -250,6 +282,11 @@ function keyEventsTetris() {
             if (Level < 3) {
                 SpaceSound.play()
             }
+        }
+        if (keyIsDown(67) && !cooldown) {
+            Holder()
+            cooldown = true
+            setTimeout(resetCooldown, 500)
         }
     }
 
