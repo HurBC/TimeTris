@@ -28,6 +28,7 @@ let levelUpTimer = 0;
 let hold;
 let cooldown = false
 const levelUpDuration = 3000;
+let caida = 600;
 
 /* 
 Generación de fondo dinámico
@@ -47,7 +48,7 @@ simulando una especie de gravedad, esto se hace fácilmente con un setInterval
 */
 setInterval(() => {
     if (start === true) {
-        if (millis() - regulador_de_caida < 300) {
+        if (millis() - regulador_de_caida < caida) {
             return
         }
         regulador_de_caida = millis()
@@ -113,6 +114,9 @@ function draw() {
     }
     if (lineas_hechas >= SubirNivel) {
         Level++;
+        if (Level % 2 == 0) {
+            caida = caida / 2;
+        }
         SubirNivel *= 1.8;
         changeMusic();
         if (Level >= 3) {
@@ -184,7 +188,10 @@ function dibujarHold() {
         push();
         translate(-100, tablero.posición.y + tablero.lado_celda * 9 + 40);
         scale(0.5); // Escala la pieza para que quepa en el espacio del hold
+        hold.posición = createVector(int(tablero.columnas / 2), -1);
         hold.dibujar();
+        pop();
+    } else {
         pop();
     }
     // ...
@@ -231,6 +238,7 @@ function Holder() {
     } else {
         newHold = tetrimino
         tetrimino = hold
+        tetrimino.posición = createVector(int(tablero.columnas / 2), -1);
         hold = newHold
     }
 }

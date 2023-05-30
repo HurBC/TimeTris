@@ -41,8 +41,8 @@ class Tablero {
                 Music2.stop();
                 Music3.stop()
                 colorChoiced = 7;
-                colorChoicedTetrimino = colorChoiced;
-                hold = '';
+                crearMapeoBaseTetriminos();
+                hold = undefined;
             }
             this.minosAlmacenados[pmino.x][pmino.y] = tetrimino.nombre;
         }
