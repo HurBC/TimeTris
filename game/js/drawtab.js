@@ -3,7 +3,8 @@ let regulador_velocidad_teclas = 0
 let regulador_de_caida = 0
 let lineas_hechas = 0
 let Score = 0
-let Level = 1
+let ScoreSumn = 1;
+let Level = 2;
 let SubirNivel = 5
 let ColorsBack = [
     [`linear-gradient(152deg, #008eea 0%, #0026e9 35%, #25f4e9 100%)`],
@@ -26,20 +27,33 @@ let SpaceSound;
 let ClearLineSound;
 let levelUpTimer = 0;
 let hold;
+let holded = true;
 let cooldown = false
 const levelUpDuration = 3000;
 let caida = 600;
+let caidaDiv = 2;
+let ColumasFilas = [10, 20];
+let myFont;
+let PopUp = true
+let background = true;
+let backToPast;
 
 /* 
 Generación de fondo dinámico
 */
 let angulo_fondo = Math.random() * 360
-let tono_fondo = Math.random() * 360
+let tono_fondo = Math.random() * 
+
+function cambiarFondo() {
+    
+}
 setInterval(() => {
-    colorSelected = colorChoiced
-    document.body.style.background = ColorsBack[colorSelected]
-    angulo_fondo += Math.random()
-    tono_fondo += Math.random()
+    if(background) {
+        colorSelected = colorChoiced
+        document.body.style.background = ColorsBack[colorSelected]
+        angulo_fondo += Math.random()
+        tono_fondo += Math.random()
+    }
 }, 20);
 
 /* 
@@ -57,6 +71,7 @@ setInterval(() => {
 }, 0);
 
 function preload() {
+    myFont = loadFont('../font/Tetris.ttf');
     soundFormats('mp3', 'wav');
     Music = loadSound('sound/TetrisClassic.mp3');
     Music2 = loadSound('sound/TetrisMusic2.mp3');
@@ -85,6 +100,7 @@ function setup() {
         tablero.ancho + 2 * MARGEN_TABLERO,
         tablero.alto + 2 * MARGEN_TABLERO + 2*tablero.lado_celda
     )
+    textFont(myFont);
 }
 
 function changeColorback() {
@@ -111,11 +127,12 @@ function draw() {
         textSize(40)
         textAlign(CENTER, CENTER)
         text("Level UP", 150, 100);
+        Mejoras();
     }
     if (lineas_hechas >= SubirNivel) {
         Level++;
         if (Level % 2 == 0) {
-            caida = caida / 2;
+            caida = caida / caidaDiv;
         }
         SubirNivel *= 1.8;
         changeMusic();
@@ -130,6 +147,20 @@ function draw() {
         if (levelUpTimer < 0) {
             levelUpTimer = 0
         }
+    }
+    if (keyIsPressed && key === 's') {
+        startGame();
+    }
+    if (!background) {
+        backToPast = createVideo('../images/backToPast.mp4')
+    
+        backToPast.size(windowWidth, windowHeight * 2);
+        backToPast.loop();
+        backToPast.style('position', 'fixed');
+        backToPast.style('top', '0');
+        backToPast.style('left', '0');
+        backToPast.style('z-index', '-1');
+        backToPast.style('object-fit', 'cover');
     }
 }
 
@@ -182,6 +213,13 @@ function dibuajarPuntajeScoreLevel() {
     pop();
 }
 
+function displayRectUpgrade(x) {
+    fill(255)
+    textSize(35)
+    textAlign(CENTER, CENTER)
+    text(x, 260, 200);
+}
+
 function dibujarHold() {
     // ...
     if (hold) {
@@ -197,15 +235,14 @@ function dibujarHold() {
     // ...
 }
 
-
 function dibujarPopUp() {
-    if (!start) {
+    if (!start && PopUp) {
         fill(0, 0, 0, 50);
         rect(0, windowHeight / 2.4, windowWidth, 100);
         fill(255, 255, 255);
-        textSize(40);
+        textSize(30);
         textAlign(CENTER, CENTER);
-        text('Haz click para jugar', windowWidth / 3, windowHeight / 2.4 + 50);
+        text('Presiona la tecla S \n para jugar', 260, 450);
     } else {
         text('')
     }
@@ -222,8 +259,9 @@ function changeMusic() {
     }
 }
 
-function mouseClicked() {
+function startGame() {
     start = true
+    PopUp = false
     if (!musicPlayed) {
         Music.loop()
         musicPlayed = true
@@ -231,15 +269,19 @@ function mouseClicked() {
 }
 
 function Holder() {
-    if (!hold) {
-        hold = tetrimino
-        console.log(hold)
-        tetrimino = new Tetrimino()
-    } else {
-        newHold = tetrimino
-        tetrimino = hold
-        tetrimino.posición = createVector(int(tablero.columnas / 2), -1);
-        hold = newHold
+    if (holded) {
+        if (!hold) {
+            hold = tetrimino
+            console.log(hold)
+            tetrimino = new Tetrimino()
+            holded = false
+        } else {
+            newHold = tetrimino
+            tetrimino = hold
+            tetrimino.posición = createVector(int(tablero.columnas / 2), -1);
+            hold = newHold
+            holded = false
+        }
     }
 }
 
@@ -273,7 +315,7 @@ function keyEventsTetris() {
         if (keyIsDown(DOWN_ARROW)) {
             tetrimino.moverAbajo()
             regulador_de_caida = millis()
-            Score += 1;
+            Score = Score + ScoreSumn;
             if (Level < 3) {
                 Blib.play()
             }

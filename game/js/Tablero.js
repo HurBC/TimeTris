@@ -4,8 +4,8 @@ empieza por una T mayúscula para identificar que es una clase y no una variable
 */
 class Tablero {
     constructor() {
-        this.columnas = 10;
-        this.filas = 20;
+        this.columnas = ColumasFilas[0];
+        this.filas = ColumasFilas[1];
         this.lado_celda = 31;
         this.ancho = this.columnas * this.lado_celda;
         this.alto = this.filas * this.lado_celda;
@@ -43,6 +43,7 @@ class Tablero {
                 colorChoiced = 7;
                 crearMapeoBaseTetriminos();
                 hold = undefined;
+                backToNormality();
             }
             this.minosAlmacenados[pmino.x][pmino.y] = tetrimino.nombre;
         }
