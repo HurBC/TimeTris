@@ -4,8 +4,8 @@ empieza por una T mayúscula para identificar que es una clase y no una variable
 */
 class Tablero {
     constructor() {
-        this.columnas = ColumasFilas[0];
-        this.filas = ColumasFilas[1];
+        this.columnas = ColumasFilas[0] || 10;
+        this.filas = ColumasFilas[1] || 20;
         this.lado_celda = 31;
         this.ancho = this.columnas * this.lado_celda;
         this.alto = this.filas * this.lado_celda;
@@ -21,7 +21,7 @@ class Tablero {
         for (let fila = 0; fila < this.filas; fila++) {
             this.minosAlmacenados[fila] = [];
             for (let columna = 0; columna < this.columnas; columna++) {
-                this.minosAlmacenados[fila].push("");
+                this.minosAlmacenados[fila][columna] = "";
             }
         }
     }
@@ -31,21 +31,10 @@ class Tablero {
                 //Juego términado
                 tablero = new Tablero();
                 tetrimino = new Tetrimino();
-                lineas_hechas = 0;
-                Score = 0;
-                Level = 1;
-                SubirNivel = 5;
-                start = false;
-                musicPlayed = false;
-                Music.stop();
-                Music2.stop();
-                Music3.stop()
-                colorChoiced = 7;
-                crearMapeoBaseTetriminos();
-                hold = undefined;
                 backToNormality();
             }
             this.minosAlmacenados[pmino.x][pmino.y] = tetrimino.nombre;
+            holded = true;
         }
         this.buscarLineasHorizontalesBorrar();
     }
@@ -62,6 +51,23 @@ class Tablero {
             }
             if (agregar) {
             lineas.push(fila);
+            }
+        }
+        this.borrarLíneasHorizontales(lineas);
+    }
+
+    buscarTodasLasLineas() {
+        let lineas = [];
+        for (let fila = 0; fila < this.filas; fila++) {
+            let tieneContenido = false;
+            for (let columna = 0; columna < this.columnas; columna++) {
+                if (this.minosAlmacenados[columna][fila]) {
+                    tieneContenido = true;
+                    break;
+                }
+            }
+            if (tieneContenido) {
+                lineas.push(fila);
             }
         }
         this.borrarLíneasHorizontales(lineas);

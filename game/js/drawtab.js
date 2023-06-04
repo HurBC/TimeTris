@@ -2,9 +2,9 @@ const MARGEN_TABLERO = 110
 let regulador_velocidad_teclas = 0
 let regulador_de_caida = 0
 let lineas_hechas = 0
-let Score = 0
+let Score = 0;
 let ScoreSumn = 1;
-let Level = 2;
+let Level = 1;
 let SubirNivel = 5
 let ColorsBack = [
     [`linear-gradient(152deg, #008eea 0%, #0026e9 35%, #25f4e9 100%)`],
@@ -35,25 +35,22 @@ let caidaDiv = 2;
 let ColumasFilas = [10, 20];
 let myFont;
 let PopUp = true
-let background = true;
-let backToPast;
+let invControls = false;
+let ClearS;
+let what = false;
+let x;
+let copyScor;
 
 /* 
 Generación de fondo dinámico
 */
 let angulo_fondo = Math.random() * 360
 let tono_fondo = Math.random() * 
-
-function cambiarFondo() {
-    
-}
 setInterval(() => {
-    if(background) {
-        colorSelected = colorChoiced
-        document.body.style.background = ColorsBack[colorSelected]
-        angulo_fondo += Math.random()
-        tono_fondo += Math.random()
-    }
+    colorSelected = colorChoiced
+    document.body.style.background = ColorsBack[colorSelected]
+    angulo_fondo += Math.random()
+    tono_fondo += Math.random()
 }, 20);
 
 /* 
@@ -115,6 +112,7 @@ function draw() {
     clear()
     dibuajarPuntajeScoreLevel()
     dibujarHold()
+    displayClear()
     tablero.dibujar()
     tetrimino.dibujar()
     keyEventsTetris()
@@ -127,7 +125,11 @@ function draw() {
         textSize(40)
         textAlign(CENTER, CENTER)
         text("Level UP", 150, 100);
-        Mejoras();
+        
+        fill(255)
+        textSize(35)
+        textAlign(CENTER, CENTER)
+        text(x, 260, 200);
     }
     if (lineas_hechas >= SubirNivel) {
         Level++;
@@ -136,6 +138,7 @@ function draw() {
         }
         SubirNivel *= 1.8;
         changeMusic();
+        Mejoras();
         if (Level >= 3) {
             changeColorback();
             crearMapeoBaseTetriminos();
@@ -151,16 +154,9 @@ function draw() {
     if (keyIsPressed && key === 's') {
         startGame();
     }
-    if (!background) {
-        backToPast = createVideo('../images/backToPast.mp4')
-    
-        backToPast.size(windowWidth, windowHeight * 2);
-        backToPast.loop();
-        backToPast.style('position', 'fixed');
-        backToPast.style('top', '0');
-        backToPast.style('left', '0');
-        backToPast.style('z-index', '-1');
-        backToPast.style('object-fit', 'cover');
+    if (keyIsPressed && key === 't') {
+        NameUpShow = true;
+        displayRectUpgrade('uwu')
     }
 }
 
@@ -213,11 +209,29 @@ function dibuajarPuntajeScoreLevel() {
     pop();
 }
 
-function displayRectUpgrade(x) {
+function displayClear() {
+    if (Score >= 500 || copyScor >= 500) {
+        ClearS = 'Ready'
+    } else {
+        ClearS = 'off'
+    }
     fill(255)
-    textSize(35)
+    textSize(20)
     textAlign(CENTER, CENTER)
-    text(x, 260, 200);
+    text("Clear:\n" + ClearS, 45, 470)
+}
+
+function mostrarTexto(texto, duracion) {
+    fill(255);
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    text(texto, 45, 470);
+    
+    setTimeout(function() {
+      // Desvanecer el texto después de la duración especificada
+      fill(0); // Cambiar el color de relleno al color de fondo para "borrar" el texto
+      rect(0, 0, width, height); // Dibujar un rectángulo del tamaño de la pantalla para "borrar" el texto
+    }, duracion);
 }
 
 function dibujarHold() {
@@ -299,17 +313,33 @@ function keyEventsTetris() {
     regulador_velocidad_teclas = millis()
     if ( start === true) {
         if (keyIsDown(RIGHT_ARROW)) {
-            tetrimino.moverDerecha()
-            regulador_de_caida = millis()
-            if (Level < 3) {
-                Blib.play()
+            if (!invControls) {
+                tetrimino.moverDerecha()
+                regulador_de_caida = millis()
+                if (Level < 3) {
+                    Blib.play()
+                }
+            } else {
+                tetrimino.moverIzquierda()
+                regulador_de_caida = millis()
+                if (Level < 3) {
+                    Blib.play()
+                }
             }
         }
         if (keyIsDown(LEFT_ARROW)) {
-            tetrimino.moverIzquierda()
-            regulador_de_caida = millis()
-            if (Level < 3) {
-                Blib.play()
+            if (!invControls) {
+                tetrimino.moverIzquierda()
+                regulador_de_caida = millis()
+                if (Level < 3) {
+                    Blib.play()
+                }
+            } else {
+                tetrimino.moverDerecha()
+                regulador_de_caida = millis()
+                if (Level < 3) {
+                    Blib.play()
+                }
             }
         }
         if (keyIsDown(DOWN_ARROW)) {
@@ -337,6 +367,14 @@ function keyEventsTetris() {
             Holder()
             cooldown = true
             setTimeout(resetCooldown, 500)
+        }
+        if (keyIsDown(88)) {
+            if (ClearS === 'Ready') {
+                Score -= 500;
+                tablero.buscarTodasLasLineas();
+            } else {
+                mostrarTexto('Puntaje insuficiente', 3000);
+            }
         }
     }
 

@@ -45,7 +45,6 @@ class Tetrimino {
         this.posición = this.espectro.posición
         this.moverAbajo()
         Score = Score + (ScoreSumn * 10);
-        holded = true;
     }
 
     girar() {
