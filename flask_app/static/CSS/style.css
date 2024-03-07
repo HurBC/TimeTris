@@ -1,0 +1,172 @@
+html {
+    transition: all .5s;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#submitInfo {
+    background-color: transparent;
+    border: none;
+}
+
+.Message {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    transition: all .5s;
+    border: 1px solid white;
+}
+
+.MessageOut {
+    width: 100%;
+    height: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: transparent;
+    background-color: rgb(0, 0, 0);
+    transition: all .5s;
+    border: 0px solid white;
+}
+
+.score{
+    position: absolute;
+    border: 1px solid rgb(255, 255, 255);
+    border-top: none;
+    top: 0;
+    right: 0;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    transition: all .5s;
+}
+
+.var {
+    background: linear-gradient();
+}
+
+.tittle_box {
+    position: absolute;
+    top: 3%;
+    font-size: 1.5vh;
+    z-index: 999;
+    color: white;
+}
+
+.show_tittle {
+    animation: show_self 2s 1 forwards;
+}
+
+.hide_tittle {
+    animation: hide_self 2s 1 forwards;
+}
+
+.message_update {
+    position: absolute;
+    top: 20%;
+    font-size: 1.5vh;
+    z-index: 999;
+}
+
+.update_disable {
+    color: transparent;
+}
+
+.update_activate {
+    color: white;
+    animation: blinking 1s forwards;
+}
+
+.time_stop {
+    transform: scale(0.5);
+    animation: STOP 10s forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes STOP {
+    from {
+        transform: scale(0.5);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes blinking {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    68% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+    85% {
+        opacity: 0;
+    }
+    90% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 0;
+    }
+    97% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes show_self {
+    from {
+        transform: scale() translateY();
+        letter-spacing: normal;
+    }
+    to {
+        transform: scale(1.3) translateY(2vh);
+        letter-spacing: 1.3vh;
+    }
+}
+
+@keyframes hide_self {
+    from {
+        transform: scale(1.3) translateY(5vh);
+        letter-spacing: 1.3vh;
+    }
+    to {
+        transform: scale() translateY();
+        letter-spacing: normal;
+    }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>TimeTris</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <script src="{{ url_for('static', filename='JS/lib/p5.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='JS/lib/addons/p5.sound.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    </head>
+
+    <body class="normal_side">
+        <div class="tittle_box show_tittle">
+            <h1>TimeTris</h1>
+        </div>
+        <div class="message_update update_desactivate">
+        </div>
+        <div class="box Message">
+            <h2 class="text">Press the letter 'S' to start the game!!!</h2>
+        </div>
+        <div class="score">
+            <h3>Top 10 players</h3>
+            <ul class="list"></ul>
+        </div>
+        <form action="/game_over" method="post">
+            <input type="hidden" id="inputScore" name="score">
+            <input type="hidden" id="inputLevel" name="level">
+            <input type="hidden" id="inputLines" name="lines">
+            <input type="submit" id="submitInfo" value="">
+        </form>
+        <div id="playersData" style="display:none;">{{ data | tojson }}</div>
+        
+        <input type="hidden" id="player" name="player" value="{{ player }}">
+        <input type="hidden" id="score" name="score" value="{{ score }}">
+
+        <audio id="hotLine" src="{{ url_for('static', filename='Audio/miamiReference.mp3') }}" preload="auto"></audio>
+        <audio id="iLikeToSleep" src="{{ url_for('static', filename='Audio/I_like_to_sleep_in_the_day.mp3') }}" preload="auto"></audio>
+        <audio id="Angels" src="{{ url_for('static', filename='Audio/ColdLine_Los_Angeles.mp3') }}" preload="auto"></audio>
+        <audio id="STOP" src="{{ url_for('static', filename='Audio/TimeSTOP.mp3') }}" preload="auto"></audio>
+        <audio id="Chaos" src="{{ url_for('static', filename='Audio/fadjgojn.mp3') }}" preload="auto"></audio>
+        <audio id="theCircus" src="{{ url_for('static', filename='Audio/The_circus.mp3') }}" preload="auto"></audio>
+        <audio id="voyager" src="{{ url_for('static', filename='Audio/voyager.mp3') }}" preload="auto"></audio>
+        <audio id="Dance" src="{{ url_for('static', filename='Audio/dance.mp3') }}" preload="auto"></audio>
+        <audio id="FUNKY" src="{{ url_for('static', filename='Audio/FUNKYBEAT.mp3') }}" preload="auto"></audio>
+        <audio id="END" src="{{ url_for('static', filename='Audio/END.mp3') }}" preload="auto"></audio>
+        <audio id="CountDOWN" src="{{ url_for('static', filename='Audio/CountDOWN.mp3') }}" preload="auto"></audio>
+
+        <script>
+            let playersData = JSON.parse(document.getElementById('playersData').textContent);
+        </script>
+        <script src="{{ url_for('static', filename='JS/index.js') }}"></script>
+        <script src="{{ url_for('static', filename='JS/Vars.js') }}"></script>
+        <script src="{{ url_for('static', filename='JS/Board.js') }}"></script>
+        <script src="{{ url_for('static', filename='JS/Piece.js') }}"></script>
+        <script src="{{ url_for('static', filename='JS/updates.js') }}"></script>
+    </body>
+</html>

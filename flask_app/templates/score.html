@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Juego</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/score.css') }}">
+</head>
+<body>
+    <div class="game-info">
+        <p id="score">Score: {{ score }}</p>
+        <p id="level">Level: {{ level }}</p>
+        <p id="lines">Lines: {{ lines }}</p>
+        <form action="/new_values" method="post">
+            <label for="player-name">Enter your initials (4 characters):</label>
+            <input type="text" id="player-name" name="player" maxlength="4" oninput="this.value = this.value.toUpperCase()">
+            <input type="hidden" id="player_score" value={{score}} name="score">
+            <input type="hidden" id="player_level" value={{level}} name="level">
+            <input type="submit" value="Send">
+        </form>
+    </div>
+    <div class="high-scores">
+        <h2>Top 10</h2>
+        <ol id="high-scores-list">
+            {% for D in data["players"] %}
+            
+            <li>{{D.name}}: {{D.score}}</li>
+            
+            {% endfor %}
+        </ol>
+    </div>
+
+    <script>
+        document.getElementById('player-name').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    </script>
+</body>
+</html>

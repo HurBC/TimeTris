@@ -1,0 +1,44 @@
+{
+    "players": [
+        {
+            "name": "HURB",
+            "score": 23040
+        },
+        {
+            "name": "POMI",
+            "score": 11520
+        },
+        {
+            "name": "POMI",
+            "score": 11520
+        },
+        {
+            "name": "SPC",
+            "score": 10120
+        },
+        {
+            "name": "HURB",
+            "score": 7220
+        },
+        {
+            "name": "SCP",
+            "score": 6920
+        },
+        {
+            "name": "FGB",
+            "score": 6880
+        },
+        {
+            "name": "XOXI",
+            "score": 6720
+        },
+        {
+            "name": "NAXO",
+            "score": 6700
+        },
+        {
+            "name": "FOX",
+            "score": 6400
+        }
+    ]
+}
